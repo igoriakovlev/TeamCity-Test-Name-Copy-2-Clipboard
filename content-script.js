@@ -23,7 +23,7 @@ function trySetCopyImpl(rows) {
 
     let span = document.createElement("a")
     span.setAttribute("class", copyLinkClass)
-    //span.setAttribute("style", "margin-right: 5px;")
+    span.setAttribute("style", "margin-right: 5px;")
     let nodeA = document.createTextNode(copyText)
     span.appendChild(nodeA)
 
