@@ -11,7 +11,6 @@ function trySetCopyImpl(rows) {
   if (rows == null || rows.lenght == 0) return
 
   for (let currentRow of rows) {
-    cancelInterval = true
 
     let copyLinkClass = "TeamCity__copy"
     let copySpan = currentRow.querySelector(`.${copyLinkClass}`)
