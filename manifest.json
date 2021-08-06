@@ -1,0 +1,12 @@
+{
+  "name": "TeamCity Test Name Copy 2 Clipboard",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {},
+  "content_scripts": [
+    {
+      "matches": ["https://buildserver.labs.intellij.net/*"],
+      "js": ["content-script.js"]
+    }
+  ]
+}
