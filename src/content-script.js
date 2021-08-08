@@ -8,7 +8,7 @@ function setCopy() {
 }
 
 function trySetCopyImpl(rows) {
-  if (rows == null || rows.lenght == 0) return
+  if (rows == null || rows.length == 0) return
 
   for (let currentRow of rows) {
 
