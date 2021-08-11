@@ -80,7 +80,7 @@ function trySetCopyImpl(rows) {
   const copyLinkClass = "TeamCity__TestName__copy"
 
   for (let currentRow of rows) {
-    if (currentRow.querySelector(`.${copyLinkClass}`) != null) return
+    if (!!currentRow.querySelector(`.${copyLinkClass}`)) return
 
     const className = currentRow.querySelector(".BuildTestName__class--hB")
     if (!className) return
