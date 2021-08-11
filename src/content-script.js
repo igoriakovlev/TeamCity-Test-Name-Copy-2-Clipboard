@@ -51,7 +51,6 @@ function tryCreateBranchLink() {
 
   const textToCopy = textElement.textContent
   createCopyLink(textToCopy, copyLinkClass, anchorElement)
-  return
 }
 
 function tryCreateBranchDropdownLink() {
@@ -72,7 +71,6 @@ function tryCreateBranchDropdownLink() {
     : rawTextContent
 
   createCopyLink(textToCopy, copyLinkClass, dropDown)
-  return
 }
 
 function trySetCopyImpl(rows) {
