@@ -70,7 +70,7 @@ function tryCreateBranchDropdownLink() {
 
   const textGetter = () => {
     const rawTextContent = dropDownTextElement.textContent
-    if (rawTextContent === "My Branches" || rawTextContent === "<All Branches>") return undefined
+    if (rawTextContent === "My Branches" || rawTextContent === "<All branches>") return undefined
     const defaultBranchPrefix = "Default branch ("
     return rawTextContent.startsWith(defaultBranchPrefix)
       ? rawTextContent.slice(defaultBranchPrefix.length, -1)
