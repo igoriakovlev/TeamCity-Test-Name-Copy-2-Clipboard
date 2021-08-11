@@ -19,7 +19,7 @@ function createCopyLink(textToCopyGetter, copyLinkClass, attachBeforeElement) {
 
   const link = document.createElement("a")
   link.setAttribute("class", copyLinkClass)
-  link.setAttribute("style", "margin-right: 5px;")
+  link.setAttribute("style", "margin-right: 5px; cursor: pointer;")
   const textNode = document.createTextNode(copyText)
   link.appendChild(textNode)
 
@@ -33,7 +33,7 @@ function createCopyLink(textToCopyGetter, copyLinkClass, attachBeforeElement) {
     }, 2000);
     if (textToCopy) {
       navigator.clipboard.writeText(textToCopy)
-    }    
+    }
   })
 
   attachTo.insertBefore(link, attachBeforeElement)
