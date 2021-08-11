@@ -9,12 +9,13 @@ function setCopy() {
   trySetCopyImpl(document.getElementsByClassName("BuildTestItemAdvanced__testCol--_p"))
 }
 
-function createCopyLink(textToCopy, copyLinkClass, attachBeforeElement) {
+function createCopyLink(textToCopyGetter, copyLinkClass, attachBeforeElement) {
 
   const attachTo = attachBeforeElement.parentNode
 
   const copyText = "|Copy|"
   const copiedText = "|Copied|"
+  const nothingToCopyText = "|Nothing to copy|"
 
   const link = document.createElement("a")
   link.setAttribute("class", copyLinkClass)
@@ -24,12 +25,15 @@ function createCopyLink(textToCopy, copyLinkClass, attachBeforeElement) {
 
   link.addEventListener('click', function (event) {
     event.stopPropagation();
-    textNode.textContent = copiedText
+    const textToCopy = textToCopyGetter()
+    textNode.textContent = textToCopy ? copiedText : nothingToCopyText
     const interval = setInterval(function () {
       clearInterval(interval)
       textNode.textContent = copyText
     }, 2000);
-    navigator.clipboard.writeText(textToCopy)
+    if (textToCopy) {
+      navigator.clipboard.writeText(textToCopy)
+    }    
   })
 
   attachTo.insertBefore(link, attachBeforeElement)
@@ -50,7 +54,7 @@ function tryCreateBranchLink() {
   if (!textElement) return
 
   const textToCopy = textElement.textContent
-  createCopyLink(textToCopy, copyLinkClass, anchorElement)
+  createCopyLink(() => textToCopy, copyLinkClass, anchorElement)
 }
 
 function tryCreateBranchDropdownLink() {
@@ -64,13 +68,16 @@ function tryCreateBranchDropdownLink() {
   const dropDownTextElement = dropDown.querySelector(".BranchSelect__newLabel--yt")
   if (!dropDownTextElement) return false
 
-  const rawTextContent = dropDownTextElement.textContent
-  const defaultBranchPrefix = "Default branch ("
-  const textToCopy = rawTextContent.startsWith(defaultBranchPrefix)
-    ? rawTextContent.slice(defaultBranchPrefix.length).slice(0, -1)
-    : rawTextContent
+  const textGetter = () => {
+    const rawTextContent = dropDownTextElement.textContent
+    if (rawTextContent === "My Branches" || rawTextContent === "<All Branches>") return undefined
+    const defaultBranchPrefix = "Default branch ("
+    return rawTextContent.startsWith(defaultBranchPrefix)
+      ? rawTextContent.slice(defaultBranchPrefix.length, -1)
+      : rawTextContent
+  }
 
-  createCopyLink(textToCopy, copyLinkClass, dropDown)
+  createCopyLink(textGetter, copyLinkClass, dropDown)
 }
 
 function trySetCopyImpl(rows) {
@@ -90,6 +97,6 @@ function trySetCopyImpl(rows) {
     const rawFqn = `${className.textContent}.${methodName.textContent}`
     const textToCopy = rawFqn.replace("$", ".")
 
-    createCopyLink(textToCopy, copyLinkClass, attachBeforeElement)
+    createCopyLink(() => textToCopy, copyLinkClass, attachBeforeElement)
   }
 }
