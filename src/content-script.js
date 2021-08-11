@@ -44,7 +44,7 @@ function tryCreateBranchLink() {
   if (!anchorElement) return
 
   const copyLinkClass = "TeamCity__branchLink__copy"
-  if (!!branchLink.parentNode.querySelector(`.${copyLinkClass}`)) return
+  if (branchLink.parentNode.querySelector(`.${copyLinkClass}`)) return
 
   const textElement = branchLink.querySelector(".MiddleEllipsis__searchable--Tv")
   if (!textElement) return
@@ -60,7 +60,7 @@ function tryCreateBranchDropdownLink() {
   const dropDown = dropDownList[0]
 
   const copyLinkClass = "TeamCity__BranchDropdown__copy"
-  if (!!dropDown.parentNode.querySelector(`.${copyLinkClass}`)) return
+  if (dropDown.parentNode.querySelector(`.${copyLinkClass}`)) return
 
   const dropDownTextElement = dropDown.querySelector(".BranchSelect__newLabel--yt")
   if (!dropDownTextElement) return false
@@ -80,7 +80,7 @@ function trySetCopyImpl(rows) {
   const copyLinkClass = "TeamCity__TestName__copy"
 
   for (let currentRow of rows) {
-    if (!!currentRow.querySelector(`.${copyLinkClass}`)) return
+    if (currentRow.querySelector(`.${copyLinkClass}`)) return
 
     const className = currentRow.querySelector(".BuildTestName__class--hB")
     if (!className) return
