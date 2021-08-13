@@ -5,6 +5,7 @@ setInterval(function () {
 function setCopy() {
   tryCreateBranchLink()
   tryCreateBranchDropdownLink()
+  trySetCopyInvestigationsImpl(document.getElementsByClassName("testWithDetails"))
   trySetCopyImpl(document.getElementsByClassName("BuildTestItemPreview__leftPart--xf"))
   trySetCopyImpl(document.getElementsByClassName("BuildTestItemAdvanced__testCol--_p"))
 }
@@ -80,6 +81,26 @@ function tryCreateBranchDropdownLink() {
   createCopyLink(textGetter, copyLinkClass, dropDown)
 }
 
+function trySetCopyInvestigationsImpl(rows) {
+  if (!rows || rows.length === 0) return
+  const copyLinkClass = "TeamCity__TestName__Investigations__copy"
+
+  for (const currentRow of rows) {
+    if (currentRow.parentNode.querySelector(`.${copyLinkClass}`)) return
+
+    const rowChilds = currentRow.childNodes
+    if (!rowChilds || rowChilds.length < 3) continue
+
+    const className = rowChilds[0]
+    if (!className) return
+    const methodName = rowChilds[2]
+    if (!methodName) return
+
+    const fqn = className.textContent.replaceAll("$", ".") + methodName.textContent.trim()
+    createCopyLink(() => fqn, copyLinkClass, currentRow)
+  }
+}
+
 function trySetCopyImpl(rows) {
   if (!rows || rows.length === 0) return
   const copyLinkClass = "TeamCity__TestName__copy"
@@ -94,9 +115,8 @@ function trySetCopyImpl(rows) {
 
     const attachBeforeElement = currentRow.querySelector(".BuildTestItemAdvanced__name--sD") ?? className
 
-    const rawFqn = `${className.textContent}.${methodName.textContent}`
-    const textToCopy = rawFqn.replace("$", ".")
+    const fqn = `${className.textContent.replaceAll("$", ".")}.${methodName.textContent}`
 
-    createCopyLink(() => textToCopy, copyLinkClass, attachBeforeElement)
+    createCopyLink(() => fqn, copyLinkClass, attachBeforeElement)
   }
 }
