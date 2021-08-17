@@ -8,6 +8,7 @@ function setCopy() {
   trySetCopyInvestigationsImpl(document.getElementsByClassName("testWithDetails"))
   trySetCopyImpl(document.getElementsByClassName("BuildTestItemPreview__leftPart--xf"))
   trySetCopyImpl(document.getElementsByClassName("BuildTestItemAdvanced__testCol--_p"))
+  trySetCopyInCompareImpl(document.getElementsByClassName("TestRow__nameCol--MD"))
 }
 
 function createCopyLink(textToCopyGetter, copyLinkClass, attachBeforeElement) {
@@ -98,6 +99,23 @@ function trySetCopyInvestigationsImpl(rows) {
 
     const fqn = className.textContent.replaceAll("$", ".") + methodName.textContent.trim()
     createCopyLink(() => fqn, copyLinkClass, currentRow)
+  }
+}
+
+function trySetCopyInCompareImpl(rows) {
+  if (!rows || rows.length === 0) return
+  const copyLinkClass = "TeamCity__TestName__In__Compare__copy"
+
+  for (const currentRow of rows) {
+
+    if (currentRow.querySelector(`.${copyLinkClass}`)) return
+
+    const linkNode = currentRow.querySelector(".ring-link-inner")
+    if (!linkNode) continue
+
+    const rawFqn = linkNode.textContent
+    const fqn = rawFqn.replaceAll("$", ".")
+    createCopyLink(() => fqn, copyLinkClass, linkNode.parentNode)
   }
 }
 
