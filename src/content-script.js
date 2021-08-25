@@ -6,8 +6,8 @@ function setCopy() {
   tryCreateBranchLink()
   tryCreateBranchDropdownLink()
   trySetCopyInvestigationsImpl(document.getElementsByClassName("testWithDetails"))
-  trySetCopyImpl(document.getElementsByClassName("BuildTestItemPreview__leftPart--xf"))
-  trySetCopyImpl(document.getElementsByClassName("BuildTestItemAdvanced__testCol--_p"))
+  trySetCopyImpl(document.getElementsByClassName("TestItemPreview__name--y5")) // Overview tab
+  trySetCopyImpl(document.getElementsByClassName("TestItemAdvanced__testCol--PW")) // Tests tab
   trySetCopyInCompareImpl(document.getElementsByClassName("TestRow__nameCol--MD"))
 }
 
@@ -102,6 +102,10 @@ function trySetCopyInvestigationsImpl(rows) {
   }
 }
 
+String.prototype.substringBefore = function (substring) {
+  return this.substring(0, this.indexOf(substring))
+}
+
 function trySetCopyInCompareImpl(rows) {
   if (!rows || rows.length === 0) return
   const copyLinkClass = "TeamCity__TestName__In__Compare__copy"
@@ -114,7 +118,7 @@ function trySetCopyInCompareImpl(rows) {
     if (!linkNode) continue
 
     const rawFqn = linkNode.textContent
-    const fqn = rawFqn.replaceAll("$", ".")
+    const fqn = rawFqn.replaceAll("$", ".").substringBefore("[")
     createCopyLink(() => fqn, copyLinkClass, linkNode.parentNode)
   }
 }
@@ -126,14 +130,14 @@ function trySetCopyImpl(rows) {
   for (let currentRow of rows) {
     if (currentRow.querySelector(`.${copyLinkClass}`)) return
 
-    const className = currentRow.querySelector(".BuildTestName__class--hB")
+    const className = currentRow.querySelector(".TestName__class--gL")
     if (!className) return
-    const methodName = currentRow.querySelector(".BuildTestName__name--Tr")
+    const methodName = currentRow.querySelector(".TestName__name--lG")
     if (!methodName) return
 
-    const attachBeforeElement = currentRow.querySelector(".BuildTestItemAdvanced__name--sD") ?? className
+    const attachBeforeElement = currentRow.querySelector(".TestItemAdvanced__name--_G") ?? className
 
-    const fqn = `${className.textContent.replaceAll("$", ".")}.${methodName.textContent}`
+    const fqn = `${className.textContent.replaceAll("$", ".")}.${methodName.textContent}`.substringBefore("[")
 
     createCopyLink(() => fqn, copyLinkClass, attachBeforeElement)
   }
