@@ -7,7 +7,7 @@ function setCopy() {
   tryCreateBranchDropdownLink()
   trySetCopyInvestigationsImpl(document.getElementsByClassName("testWithDetails"))
   trySetCopyImpl(document.getElementsByClassName("BuildTestItemPreview__leftPart--xf"))
-  trySetCopyImpl(document.getElementsByClassName("BuildTestItemAdvanced__testCol--_p"))
+  trySetCopyImpl(document.getElementsByClassName("TestItemAdvanced__testCol--PW")) // Tests tab
   trySetCopyInCompareImpl(document.getElementsByClassName("TestRow__nameCol--MD"))
 }
 
@@ -126,12 +126,12 @@ function trySetCopyImpl(rows) {
   for (let currentRow of rows) {
     if (currentRow.querySelector(`.${copyLinkClass}`)) return
 
-    const className = currentRow.querySelector(".BuildTestName__class--hB")
+    const className = currentRow.querySelector(".TestName__class--gL")
     if (!className) return
-    const methodName = currentRow.querySelector(".BuildTestName__name--Tr")
+    const methodName = currentRow.querySelector(".TestName__name--lG")
     if (!methodName) return
 
-    const attachBeforeElement = currentRow.querySelector(".BuildTestItemAdvanced__name--sD") ?? className
+    const attachBeforeElement = currentRow.querySelector(".TestItemAdvanced__name--_G") ?? className
 
     const fqn = `${className.textContent.replaceAll("$", ".")}.${methodName.textContent}`
 
