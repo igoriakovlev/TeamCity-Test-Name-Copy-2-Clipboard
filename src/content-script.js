@@ -6,7 +6,7 @@ function setCopy() {
   tryCreateBranchLink()
   tryCreateBranchDropdownLink()
   trySetCopyInvestigationsImpl(document.getElementsByClassName("testWithDetails"))
-  trySetCopyImpl(document.getElementsByClassName("BuildTestItemPreview__leftPart--xf"))
+  trySetCopyImpl(document.getElementsByClassName("TestItemPreview__name--y5")) // Overview tab
   trySetCopyImpl(document.getElementsByClassName("TestItemAdvanced__testCol--PW")) // Tests tab
   trySetCopyInCompareImpl(document.getElementsByClassName("TestRow__nameCol--MD"))
 }
