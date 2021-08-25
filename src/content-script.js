@@ -102,6 +102,10 @@ function trySetCopyInvestigationsImpl(rows) {
   }
 }
 
+String.prototype.substringBefore = function (substring) {
+  return this.substring(0, this.indexOf(substring))
+}
+
 function trySetCopyInCompareImpl(rows) {
   if (!rows || rows.length === 0) return
   const copyLinkClass = "TeamCity__TestName__In__Compare__copy"
@@ -114,7 +118,7 @@ function trySetCopyInCompareImpl(rows) {
     if (!linkNode) continue
 
     const rawFqn = linkNode.textContent
-    const fqn = rawFqn.replaceAll("$", ".")
+    const fqn = rawFqn.replaceAll("$", ".").substringBefore("[")
     createCopyLink(() => fqn, copyLinkClass, linkNode.parentNode)
   }
 }
@@ -133,7 +137,7 @@ function trySetCopyImpl(rows) {
 
     const attachBeforeElement = currentRow.querySelector(".TestItemAdvanced__name--_G") ?? className
 
-    const fqn = `${className.textContent.replaceAll("$", ".")}.${methodName.textContent}`
+    const fqn = `${className.textContent.replaceAll("$", ".")}.${methodName.textContent}`.substringBefore("[")
 
     createCopyLink(() => fqn, copyLinkClass, attachBeforeElement)
   }
