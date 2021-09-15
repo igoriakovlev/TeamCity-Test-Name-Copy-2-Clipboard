@@ -103,7 +103,8 @@ function trySetCopyInvestigationsImpl(rows) {
 }
 
 String.prototype.substringBefore = function (substring) {
-  return this.substring(0, this.indexOf(substring))
+  const index = this.indexOf(substring)
+  return index == -1 ? this : this.substring(0, index)
 }
 
 function trySetCopyInCompareImpl(rows) {
